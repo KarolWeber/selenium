@@ -1,5 +1,5 @@
-import pytest
 import allure
+import pytest
 from locators.dashboard_locators import user_data_locators
 from test_data.login_data import login_data
 from selenium.webdriver.common.by import By
