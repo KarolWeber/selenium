@@ -10,4 +10,5 @@ def assertion_teardown(driver, expected_result, current_result):
     if not test_status:
         driver.save_screenshot(f'../screenshots/{test_name}_{datetime.now().strftime("%Y_%m_%d_%H_%M_%S")}.png')
     driver.quit()
-    assert test_status, print(f'\n{40*"+"}\nExpected: {expected_result}\nCurrent: {current_result}\n{40*"+"}\n')
+    print(f'\n{40 * "+"}\nExpected: {expected_result}\nCurrent : {current_result}\n{40 * "+"}\n')
+    assert test_status
