@@ -3,8 +3,8 @@ user_data_locators = {
 }
 
 dashboard_locators = {
-    'message': '#show_messages',
-    'money_value': '#money_value',
+    'message': 'show_messages',
+    'money_value': 'money_value',
     'close_button': 'close-button'
 }
 
