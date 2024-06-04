@@ -1,5 +1,6 @@
 import allure
-
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from configuration.url import base_url
 from configuration.web_driver import web_driver
 from selenium.webdriver.common.by import By
@@ -13,9 +14,12 @@ class LoginPage:
         if driver is None:
             self.driver = web_driver()
         self.driver.get(base_url)
-        self.login_input = self.driver.find_element(By.ID, login_locators['login_id'])
-        self.password_input = self.driver.find_element(By.ID, login_locators['login_password'])
-        self.login_button = self.driver.find_element(By.ID, login_locators['login_button'])
+        WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_id'])))
+        WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_password'])))
+        WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_button'])))
+        self._login_input = self.driver.find_element(By.ID, login_locators['login_id'])
+        self._password_input = self.driver.find_element(By.ID, login_locators['login_password'])
+        self._login_button = self.driver.find_element(By.ID, login_locators['login_button'])
 
     @allure.step("Entering login ID")
     def enter_login(self, login_id):
@@ -23,7 +27,7 @@ class LoginPage:
         Filling login input.
         :param login_id: User login ID.
         """
-        self.login_input = self.driver.find_element(By.ID, login_locators['login_id']).send_keys(login_id)
+        self._login_input = self.driver.find_element(By.ID, login_locators['login_id']).send_keys(login_id)
 
     @allure.step("Entering password")
     def enter_password(self, password):
@@ -31,7 +35,7 @@ class LoginPage:
         Filling password input.
         :param password: User password.
         """
-        self.password_input = self.driver.find_element(By.ID, login_locators['login_password']).send_keys(password)
+        self._password_input = self.driver.find_element(By.ID, login_locators['login_password']).send_keys(password)
 
     @allure.step("Log in")
     def log_in(self):
@@ -39,7 +43,7 @@ class LoginPage:
         Clickin on login button.
         :return: If credentials are correct -> Login the user into the system.
         """
-        self.login_button = self.driver.find_element(By.ID, login_locators['login_button']).click()
+        self._login_button = self.driver.find_element(By.ID, login_locators['login_button']).click()
 
     def login(self, user_id=login_data["login_id"], user_password=login_data["login_password"], log_in=True):
         """
