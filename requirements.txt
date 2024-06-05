@@ -1,0 +1,7 @@
+allure-combine==1.0.11
+allure-pytest==2.13.5
+allure-python-commons==2.13.5
+pytest==8.2.2
+selenium==4.21.0
+webdriver-manager==4.0.1
+gir
