@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    parameters {
+      string defaultValue: 'master', name: 'BRANCH', trim: true
+    }
+    stages {
+        stage('Git checkout') {
+            steps {
+                git branch: '${BRANCH}', url: 'https://github.com/KarolWeber/selenium.git'
+            }
+        }
+
+        stage('Run test') {
+            steps {
+                withEnv(["HOME=${env.WORKSPACE}"]) {
+                    bat 'pip3 install virtualenv'
+                    
+                    bat 'pip3 install -r requirements.txt'
+    
+                    bat 'pytest --alluredir=reports'
+                }
+            }
+        }
+        
+        stage('Create report') {
+            steps {
+                allure includeProperties: false, jdk: '', results: [[path: 'reports']]
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'reports', reportFiles: 'reports.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            }
+        }
+
+    }
+}
