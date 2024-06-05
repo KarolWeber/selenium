@@ -4,5 +4,4 @@ payment_locators = {
     'amount': 'widget_1_topup_amount',
     'title': 'form_title',
     'execute_button': 'execute_btn',
-    'close_button' : "button[data-testid='close-button']"
 }

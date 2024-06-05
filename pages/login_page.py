@@ -23,26 +23,14 @@ class LoginPage:
 
     @allure.step("Entering login ID")
     def enter_login(self, login_id):
-        """
-        Filling login input.
-        :param login_id: User login ID.
-        """
         self._login_input = self.driver.find_element(By.ID, login_locators['login_id']).send_keys(login_id)
 
     @allure.step("Entering password")
     def enter_password(self, password):
-        """
-        Filling password input.
-        :param password: User password.
-        """
         self._password_input = self.driver.find_element(By.ID, login_locators['login_password']).send_keys(password)
 
     @allure.step("Log in")
     def log_in(self):
-        """
-        Clickin on login button.
-        :return: If credentials are correct -> Login the user into the system.
-        """
         self._login_button = self.driver.find_element(By.ID, login_locators['login_button']).click()
 
     def login(self, user_id=login_data["login_id"], user_password=login_data["login_password"], log_in=True):

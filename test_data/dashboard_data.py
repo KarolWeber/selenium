@@ -1,10 +1,10 @@
-quick_payment = {
-    "receiver": "2",
+quick_payment_data = {
+    "receiver": "Chuck Demobankowy",
     "amount": "150",
-    "title": "Transfer"
+    "title": "Transfer",
 }
 
-phone_top_up = {
+phone_top_up_data = {
     "receiver": "500 xxx xxx",
     "amount": "150"
 }

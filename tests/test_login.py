@@ -19,8 +19,8 @@ class TestLogin:
         driver = web_driver()
         login_page = LoginPage(driver)
         login_page.login()
-        expected = login_data['username']
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, user_data_locators['username'])))
+        expected = login_data['username']
         current = driver.find_element(By.ID, user_data_locators['username']).text
         assertion_teardown(driver, expected, current)
 
@@ -30,8 +30,8 @@ class TestLogin:
         login_page = LoginPage(driver)
         login_page.enter_login("Test")
         login_page.enter_password("Test1234")
-        expected = login_errors['login_length_error']
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_error_id'])))
+        expected = login_errors['login_length_error']
         current = driver.find_element(By.ID, login_locators['login_error_id']).text
         assertion_teardown(driver, expected, current)
 
@@ -41,8 +41,8 @@ class TestLogin:
         login_page = LoginPage(driver)
         login_page.enter_password("Test")
         login_page.enter_login("Test1234")
-        expected = login_errors['password_length_error']
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_error_password'])))
+        expected = login_errors['password_length_error']
         current = driver.find_element(By.ID, login_locators['login_error_password']).text
         assertion_teardown(driver, expected, current)
 
@@ -52,8 +52,8 @@ class TestLogin:
         login_page = LoginPage(driver)
         login_page.enter_login("")
         login_page.enter_password("Test")
-        expected = login_errors['field_required']
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_error_id'])))
+        expected = login_errors['field_required']
         current = driver.find_element(By.ID, login_locators['login_error_id']).text
         assertion_teardown(driver, expected, current)
 
@@ -63,8 +63,8 @@ class TestLogin:
         login_page = LoginPage(driver)
         login_page.enter_password("")
         login_page.enter_login("Test")
-        expected = login_errors['field_required']
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_error_password'])))
+        expected = login_errors['field_required']
         current = driver.find_element(By.ID, login_locators['login_error_password']).text
         assertion_teardown(driver, expected, current)
 
