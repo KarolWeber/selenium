@@ -1,11 +1,14 @@
 import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from configuration.url import base_url
 from configuration.web_driver import web_driver
 from selenium.webdriver.common.by import By
 from test_data.login_data import login_data
 from locators.login_locators import login_locators
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class LoginPage:
@@ -13,7 +16,7 @@ class LoginPage:
         self.driver = driver
         if driver is None:
             self.driver = web_driver()
-        self.driver.get(base_url)
+        self.driver.get(os.getenv('BASE_URL'))
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_id'])))
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_password'])))
         WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, login_locators['login_button'])))

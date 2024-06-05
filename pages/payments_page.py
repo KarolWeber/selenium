@@ -1,7 +1,6 @@
 import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from configuration.url import base_url
 from configuration.web_driver import web_driver
 from selenium.webdriver.common.by import By
 from test_data.payments_data import cash_transfer_data
