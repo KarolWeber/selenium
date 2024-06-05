@@ -15,24 +15,24 @@ from utilities.tools import assertion_teardown
 @pytest.mark.dashboard
 @allure.suite("Dashboard")
 class TestDashboard:
+    def setup_method(self):
+        self.driver = web_driver()
+        LoginPage(self.driver).login()
+        self.dashboard_page = DashboardPage(self.driver)
+
+    def teardown_method(self):
+        self.driver.quit()
+
     @allure.title("Quick payment")
     def test_quick_payment(self):
-        driver = web_driver()
-        LoginPage(driver).login()
-        dashboard_page = DashboardPage(driver)
-        dashboard_page.quick_payment()
-        WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message'])))
+        self.dashboard_page.quick_payment()
         expected = f"Przelew wykonany! {quick_payment_data['receiver']} - {quick_payment_data['amount']},00PLN - {quick_payment_data['title']}"
-        current = driver.find_element(By.ID, dashboard_locators['message']).text
-        assertion_teardown(driver, expected, current)
+        current = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message']))).text
+        assertion_teardown(self.driver, expected, current)
 
     @allure.title("Phone top up")
     def test_phone_top_up(self):
-        driver = web_driver()
-        LoginPage(driver).login()
-        dashboard_page = DashboardPage(driver)
-        dashboard_page.phone_top_up()
-        WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message'])))
+        self.dashboard_page.phone_top_up()
         expected = f"Doładowanie wykonane! {phone_top_up_data['amount']},00PLN na numer {phone_top_up_data['receiver']}"
-        current = driver.find_element(By.ID, dashboard_locators['message']).text
-        assertion_teardown(driver, expected, current)
+        current = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message']))).text
+        assertion_teardown(self.driver, expected, current)

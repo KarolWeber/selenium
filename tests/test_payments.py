@@ -19,17 +19,21 @@ from utilities.tools import assertion_teardown
 @pytest.mark.login
 @allure.suite("Payments")
 class TestPayments:
+    def setup_method(self):
+        self.driver = web_driver()
+        LoginPage(self.driver).login()
+        SideMenu.payments(self.driver)
+        self.payment_page = PaymentPage(self.driver)
+
+    def teardown_method(self):
+        self.driver.quit()
+
     @allure.title("Simple Cash Transfer")
     def test_simple_cash_transfer(self):
-        driver = web_driver()
-        login_page = LoginPage(driver)
-        login_page.login()
-        SideMenu.payments(driver)
-        payment_page = PaymentPage(driver)
-        payment_page.simple_transfer()
+        self.payment_page.simple_transfer()
         expected = f"Przelew wykonany! {cash_transfer_data['amount']},00PLN dla {cash_transfer_data['receiver']}"
-        current = driver.find_element(By.ID, dashboard_locators['message']).text
-        assertion_teardown(driver, expected, current)
+        current = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message']))).text
+        assertion_teardown(self.driver, expected, current)
 
 
 
