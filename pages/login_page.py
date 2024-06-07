@@ -26,23 +26,33 @@ class LoginPage:
 
     @allure.step("Entering login ID")
     def enter_login(self, login_id):
+        """
+        Enter login ID.
+        :param login_id: Login ID to be entered.
+        """
         self._login_input = self.driver.find_element(By.ID, login_locators['login_id']).send_keys(login_id)
 
     @allure.step("Entering password")
     def enter_password(self, password):
+        """
+        Enter password.
+        :param password: Password to be entered.
+        """
         self._password_input = self.driver.find_element(By.ID, login_locators['login_password']).send_keys(password)
 
     @allure.step("Log in")
     def log_in(self):
+        """
+        Click the login button.
+        """
         self._login_button = self.driver.find_element(By.ID, login_locators['login_button']).click()
 
     def login(self, user_id=login_data["login_id"], user_password=login_data["login_password"], log_in=True):
         """
-        Login the user into the system
-        :param user_id: User login ID. Default get from test data
-        :param user_password: User password. Default get from test data
-        :param log_in: If True (default), user click login button
-        :return: If credentials are correct and log_in is True -> Login the user into the system
+        Perform user login.
+        :param user_id: Login ID to be entered.
+        :param user_password: Password to be entered.
+        :param log_in: Flag indicating whether to perform login (default True).
         """
         self.enter_login(user_id)
         self.enter_password(user_password)

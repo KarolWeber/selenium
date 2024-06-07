@@ -16,15 +16,28 @@ from utilities.tools import assertion_teardown
 @allure.suite("Dashboard")
 class TestDashboard:
     def setup_method(self):
+        """
+        Instantiate a WebDriver instance.
+        """
         self.driver = web_driver()
         LoginPage(self.driver).login()
         self.dashboard_page = DashboardPage(self.driver)
 
     def teardown_method(self):
+        """
+        Close WebDriver instance.
+        """
         self.driver.quit()
 
     @allure.title("Quick payment")
     def test_quick_payment(self):
+        """
+        Verify quick payment functionality.
+
+        Steps:
+        1. Initiate a quick payment.
+        2. Check the displayed success message.
+        """
         self.dashboard_page.quick_payment()
         expected = f"Przelew wykonany! {quick_payment_data['receiver']} - {quick_payment_data['amount']},00PLN - {quick_payment_data['title']}"
         current = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message']))).text
@@ -32,6 +45,13 @@ class TestDashboard:
 
     @allure.title("Phone top up")
     def test_phone_top_up(self):
+        """
+        Verify phone top up functionality.
+
+        Steps:
+        1. Initiate a phne top up.
+        2. Check the displayed success message.
+        """
         self.dashboard_page.phone_top_up()
         expected = f"Doładowanie wykonane! {phone_top_up_data['amount']},00PLN na numer {phone_top_up_data['receiver']}"
         current = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message']))).text

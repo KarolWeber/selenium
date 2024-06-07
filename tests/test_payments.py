@@ -20,16 +20,29 @@ from utilities.tools import assertion_teardown
 @allure.suite("Payments")
 class TestPayments:
     def setup_method(self):
+        """
+        Instantiate a WebDriver instance.
+        """
         self.driver = web_driver()
         LoginPage(self.driver).login()
         SideMenu.payments(self.driver)
         self.payment_page = PaymentPage(self.driver)
 
     def teardown_method(self):
+        """
+        Close WebDriver instance.
+        """
         self.driver.quit()
 
     @allure.title("Simple Cash Transfer")
     def test_simple_cash_transfer(self):
+        """
+        Verify simple cash transfer functionality.
+
+        Steps:
+        1. Initiate a simple cash transfer.
+        2. Check the displayed success message.
+        """
         self.payment_page.simple_transfer()
         expected = f"Przelew wykonany! {cash_transfer_data['amount']},00PLN dla {cash_transfer_data['receiver']}"
         current = WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.ID, dashboard_locators['message']))).text

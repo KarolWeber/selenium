@@ -24,37 +24,58 @@ class PaymentPage:
 
     @allure.step("Entering recievier")
     def enter_reciever(self, recievier):
+        """
+        Enter receiver for payment.
+        :param recievier: Receiver's name to be entered.
+        """
         self._recivier_input = self.driver.find_element(By.ID, payment_locators['receiver']).send_keys(recievier)
 
     @allure.step("Entering iban number")
     def enter_iban_number(self, iban):
+        """
+        Enter IBAN for payment.
+        :param iban: IBAN to be entered.
+        """
         self._account_input = self.driver.find_element(By.ID, payment_locators['iban']).send_keys(iban)
 
     @allure.step("Entering amount")
     def enter_amount(self, amount):
+        """
+        Enter amount for payment.
+        :param amount: Amount for payment.
+        """
         self._amount_input = self.driver.find_element(By.ID, payment_locators['amount']).send_keys(amount)
 
     @allure.step("Entering title")
     def enter_title(self, title):
+        """
+        Enter title for payment.
+        :param title: Title for payment.
+        """
         self._amount_input = self.driver.find_element(By.ID, payment_locators['title']).send_keys(title)
 
     @allure.step("Send transfer")
     def send_transfer(self):
+        """
+        Click the execute button for payment.
+        """
         self._execution_button = self.driver.find_element(By.ID, payment_locators['execute_button']).click()
 
     @allure.step("Close pop up")
     def close_pop_up(self):
+        """
+        Wait for and click the close button on the dashboard popup.
+        """
         WebDriverWait(self.driver, 2).until(EC.presence_of_element_located((By.CSS_SELECTOR, dashboard_locators['close_button'])))
         self._close_popup_button = self.driver.find_element(By.CSS_SELECTOR, dashboard_locators['close_button']).click()
 
     def simple_transfer(self, reciever=cash_transfer_data["receiver"], iban=cash_transfer_data["iban"], amount=cash_transfer_data["amount"], title=cash_transfer_data["title"]):
         """
         Execute simpler cash transfer
-        :param reciever: Reciever
-        :param iban: Reviecer iban number
-        :param amount: Cash transfer amount
-        :param title: Cash transfer title
-        :return: Execute cash transfer if parameters are correct
+        :param reciever: Receiver's name to be entered.
+        :param iban: IBAN to be entered.
+        :param amount: Amount for payment.
+        :param title: Title for payment.
         """
         self.enter_reciever(reciever)
         self.enter_iban_number(iban)
